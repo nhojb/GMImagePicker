@@ -135,6 +135,8 @@ NSString * const GMGridViewCellIdentifier = @"GMGridViewCellIdentifier";
     self.imageRequestOptions = [[PHImageRequestOptions alloc] init];
     self.imageRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
     self.imageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeFast;
+    // Ensure images will be fetched from iCloud if necessary.
+    self.imageRequestOptions.networkAccessAllowed = YES;
 
     [self resetCachedAssets];
 
