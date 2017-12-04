@@ -22,7 +22,7 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    
+
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])
     {
         self.opaque                             = NO;
@@ -32,10 +32,10 @@
         // self.isAccessibilityElement             = YES;
 
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
+
         // Border width of 1 pixel:
         float borderWidth = 1.0/[UIScreen mainScreen].scale;
-        
+
         // ImageView
         _imageView3 = [UIImageView new];
         _imageView3.contentMode = UIViewContentModeScaleAspectFill;
@@ -46,7 +46,7 @@
         _imageView3.translatesAutoresizingMaskIntoConstraints = YES;
         _imageView3.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         [self.contentView addSubview:_imageView3];
-        
+
         // ImageView
         _imageView2 = [UIImageView new];
         _imageView2.contentMode = UIViewContentModeScaleAspectFill;
@@ -57,7 +57,7 @@
         _imageView2.translatesAutoresizingMaskIntoConstraints = YES;
         _imageView2.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         [self.contentView addSubview:_imageView2];
-        
+
         // ImageView
         _imageView1 = [UIImageView new];
         _imageView1.contentMode = UIViewContentModeScaleAspectFill;
@@ -68,8 +68,8 @@
         _imageView1.translatesAutoresizingMaskIntoConstraints = YES;
         _imageView1.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         [self.contentView addSubview:_imageView1];
-        
-        
+
+
         // The video gradient, label & icon
         UIColor *topGradient = [UIColor colorWithRed:0.00 green:0.00 blue:0.00 alpha:0.0];
         UIColor *midGradient = [UIColor colorWithRed:0.00 green:0.00 blue:0.00 alpha:0.33];
@@ -84,7 +84,7 @@
         _gradientView.translatesAutoresizingMaskIntoConstraints = YES;
         [self.imageView1 addSubview:_gradientView];
         _gradientView.hidden = YES;
-        
+
         // VideoIcon
         _videoIcon = [UIImageView new];
         _videoIcon.contentMode = UIViewContentModeScaleAspectFill;
@@ -106,38 +106,8 @@
         self.detailTextLabel.numberOfLines = 1;
         self.detailTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
         self.detailTextLabel.adjustsFontSizeToFitWidth = YES;
-        
-        // Set next text labels contraints :
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[imageView1]-(offset)-[textLabel]-|"
-                                                                                 options:0
-                                                                                 metrics:@{@"offset": @(kAlbumImageToTextSpace)}
-                                                                                   views:@{@"textLabel": self.textLabel,
-                                                                                           @"imageView1": self.imageView1}]];
-        
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[imageView1]-(offset)-[detailTextLabel]-|"
-                                                                                 options:0
-                                                                                 metrics:@{@"offset": @(kAlbumImageToTextSpace)}
-                                                                                   views:@{@"detailTextLabel": self.detailTextLabel,
-                                                                                           @"imageView1": self.imageView1}]];
-        
-        
-        [self.contentView addConstraints:@[[NSLayoutConstraint constraintWithItem:self.textLabel
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                        relatedBy:NSLayoutRelationEqual
-                                                                           toItem:self.textLabel.superview
-                                                                        attribute:NSLayoutAttributeCenterY
-                                                                       multiplier:1.f constant:0.f]]];
-        
-        [self.contentView addConstraints:@[[NSLayoutConstraint constraintWithItem:self.detailTextLabel
-                                                                        attribute:NSLayoutAttributeTop
-                                                                        relatedBy:NSLayoutRelationEqual
-                                                                           toItem:self.textLabel.superview
-                                                                        attribute:NSLayoutAttributeCenterY
-                                                                       multiplier:1.f constant:+4.f]]];
     }
-    
-    
-    
+
     return self;
 }
 
@@ -153,12 +123,24 @@
     }
 }
 
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+
+    CGRect frame = self.textLabel.frame;
+    frame.origin.x = CGRectGetMaxX(self.imageView1.frame) + kAlbumImageToTextSpace;
+    self.textLabel.frame = frame;
+
+    frame = self.detailTextLabel.frame;
+    frame.origin.x = self.textLabel.frame.origin.x;
+    self.detailTextLabel.frame = frame;
 }
 
 @end
